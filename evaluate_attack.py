@@ -15,21 +15,21 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     dave  = get_model("dave2v1").to(device).eval()
     epoch = get_model("epoch").to(device).eval()
-    dave.load_state_dict(torch.load("/raid/007-Xiangyu-Experiments/selforacle/EnhanceTransferability/result/checkpoint_best_dave2v1_normalized.pth", map_location=device))
-    epoch.load_state_dict(torch.load("/raid/007-Xiangyu-Experiments/selforacle/EnhanceTransferability/result/checkpoint_best_epoch_normalized.pth", map_location=device))
+    dave.load_state_dict(torch.load("../result/checkpoint_best_dave2v1_normalized.pth", map_location=device))
+    epoch.load_state_dict(torch.load("../result/checkpoint_best_epoch_normalized.pth", map_location=device))
     transform = transforms.Compose([
         transforms.Resize((160, 320)),
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
     ])
     clean_ds = UdacityImageTestDataset(
-        base_dir="/raid/007-Xiangyu-Experiments/selforacle/evaluation_data",
+        base_dir="../evaluation_data",
         data=["CHAUFFEUR-Track1-Normal"],
         mode="clean",
         transform=transform,
         fmodel=None,
     )
-    adv_ds = AnomalImageDataset("/raid/007-Xiangyu-Experiments/selforacle/evaluation/sp_attack/epoch", transform=transform)
+    adv_ds = AnomalImageDataset("../evaluation/sp_attack/epoch", transform=transform)
 
     assert len(clean_ds) == len(adv_ds), "Datasets must be the same length"
 
