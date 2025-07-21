@@ -157,13 +157,13 @@ if __name__ == "__main__":
     attack = "pgd"
     #dave2v1
     davev1 = get_model(name)
-    state_dict = torch.load(f"/raid/007-Xiangyu-Experiments/selforacle/EnhanceTransferability/result/checkpoint_best_{name}_normalized.pth")
+    state_dict = torch.load(f"../result/checkpoint_best_{name}_normalized.pth")
     davev1.load_state_dict(state_dict)
     davev1.cuda()
     epsilon = 8/255
     model =davev1
-    save_dir = f"/raid/007-Xiangyu-Experiments/selforacle/evaluation/{attack}_attack/{name}"
-    path = "/raid/007-Xiangyu-Experiments/selforacle/"
+    save_dir = f"../evaluation/{attack}_attack/{name}"
+    path = "../"
     # Load dataset
     data_folders = [
     "evaluation_data/CHAUFFEUR-Track1-Normal",
